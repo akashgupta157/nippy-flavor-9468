@@ -7,7 +7,7 @@ export const Plantscard = ({ _id, image, english_name }) => {
     <Box
       display={"flex"}
       flexDirection={["row", "row", "column", "column"]}
-      mt={"50px"}
+      m={"50px 0"}
       pl={["5px", "0px", "0px", "0px"]}
       pr={["5px", "0px", "0px", "0px"]}
       width={["380px", "500px", "260px", "240px"]}
