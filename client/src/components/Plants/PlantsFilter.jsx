@@ -3,11 +3,12 @@ import {
   Box,
   Text,
   Image,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
   Grid,
+  Flex,
 } from "@chakra-ui/react";
 import { TbTriangleFilled, TbTriangleInvertedFilled } from "react-icons/tb";
 
@@ -18,15 +19,19 @@ export const PlantsFilter = () => {
   const initialFlowerColor = searchParams.getAll("flower_color");
 
   const [flower_color, setFlowerColor] = useState(initialFlowerColor || "");
+  const [isFlowerColorMenuOpen, setIsFlowerColorMenuOpen] = useState(false);
 
   const initialGrowthHeight = searchParams.getAll("growth_height");
   const [growth_height, setGrowthHeight] = useState(initialGrowthHeight || "");
+  const [isGrowthHeightMenuOpen, setIsGrowthHeightMenuOpen] = useState(false);
 
   const initialLight = searchParams.getAll("light");
   const [light, setLight] = useState(initialLight || []);
+  const [isLightMenuOpen, setIsLightMenuOpen] = useState(false);
 
   const initialGardenStyle = searchParams.getAll("garden_style");
   const [garden_style, setGardenStyle] = useState(initialGardenStyle || "");
+  const [isGardenStyleMenuOpen, setIsGardenStyleMenuOpen] = useState(false);
 
   useEffect(() => {
     let params = {
@@ -39,16 +44,20 @@ export const PlantsFilter = () => {
     setSearchParams(params);
   }, [flower_color, growth_height, light, garden_style]);
 
-  const handleFlowerColor = (value) => {
+  const handleFlowerColor = (e) => {
+    const { value } = e.target;
     setFlowerColor(value);
   };
-  const handleHeight = (value) => {
+  const handleHeight = (e) => {
+    const { value } = e.target;
     setGrowthHeight(value);
   };
-  const handleLight = (value) => {
+  const handleLight = (e) => {
+    const { value } = e.target;
     setLight(value);
   };
-  const handleGardenStyle = (value) => {
+  const handleGardenStyle = (e) => {
+    const { value } = e.target;
     setGardenStyle(value);
   };
 
@@ -73,402 +82,214 @@ export const PlantsFilter = () => {
         gridTemplateColumns={{
           base: "repeat(2, 1fr)",
           sm: "repeat(2, 1fr)",
-          md: "repeat(4, 1fr)",
-          lg: "repeat(4, 1fr)",
+          md: "repeat(2, 1fr)",
+          lg: "repeat(2, 1fr)",
+          xl: "repeat(4, 1fr)",
         }}
         gap={20}
       >
         <Box>
-          <Accordion
-            allowMultiple
-            position={"absolute"}
-            bg={"white"}
-            _hover={{ bg: "white" }}
-            box-shadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"
+          <Menu
+            isOpen={isFlowerColorMenuOpen}
+            onOpen={() => setIsFlowerColorMenuOpen(true)}
+            onClose={() => setIsFlowerColorMenuOpen(false)}
           >
-            <AccordionItem>
-              {({ isExpanded }) => (
-                <>
-                  <AccordionButton
-                    _hover={{ bg: "white" }}
-                    w={["120px", "130px", "150px", "200px"]}
+            <MenuButton
+              as={Box}
+              cursor={"pointer"}
+              bg={"white"}
+              _hover={{ bg: "white" }}
+              w={["120px", "130px", "150px", "200px"]}
+            >
+              <Flex
+                h={"35px"}
+                alignItems={"center"}
+                justifyContent={"space-around"}
+              >
+                <Flex justifyContent={"flex-start"} alignItems={"center"}>
+                  <Image
+                    w={"35px"}
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSa374wI2e0xacLz9dvTjOAogn5jQTiQsNUSg&usqp=CAU"
+                  />
+                  <Box
+                    as="span"
+                    textAlign="left"
+                    fontSize={15}
+                    pl={"5px"}
+                    pr={"10px"}
                   >
-                    <Image
-                      w={"35px"}
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSa374wI2e0xacLz9dvTjOAogn5jQTiQsNUSg&usqp=CAU"
-                    />
-                    <Box
-                      as="span"
-                      flex="1"
-                      textAlign="left"
-                      fontSize={15}
-                      pl={"5px"}
-                      pr={"10px"}
-                    >
-                      Flower color
-                    </Box>
-                    {isExpanded ? (
-                      <TbTriangleInvertedFilled
-                        fontSize="11px"
-                        color="#6DB644"
-                      />
-                    ) : (
-                      <TbTriangleFilled fontSize="11px" color="#6DB644" />
-                    )}
-                  </AccordionButton>
-
-                  <AccordionPanel
-                    pb={2}
-                    cursor="pointer"
-                    textAlign={"left"}
-                    fontSize={"14px"}
-                    onClick={() => handleFlowerColor("blue")}
-                  >
-                    blue
-                  </AccordionPanel>
-                  <AccordionPanel
-                    textAlign={"left"}
-                    pb={2}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleFlowerColor("brown")}
-                  >
-                    brown
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleFlowerColor("green")}
-                  >
-                    green
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleFlowerColor("multicolored")}
-                  >
-                    multicolored
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleFlowerColor("orange")}
-                  >
-                    orange
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleFlowerColor("Pink")}
-                  >
-                    pink
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleFlowerColor("Purple")}
-                  >
-                    purple
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleFlowerColor("red")}
-                  >
-                    red
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleFlowerColor("white")}
-                  >
-                    white
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleFlowerColor("yellow")}
-                  >
-                    yellow
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-          </Accordion>
+                    Flower color
+                  </Box>
+                </Flex>
+                {isFlowerColorMenuOpen ? (
+                  <TbTriangleFilled fontSize="11px" color="#6DB644" />
+                ) : (
+                  <TbTriangleInvertedFilled fontSize="11px" color="#6DB644" />
+                )}
+              </Flex>
+            </MenuButton>
+            <MenuList onClick={handleFlowerColor}>
+              <MenuItem value={"blue"}>blue</MenuItem>
+              <MenuItem value={"brown"}>brown</MenuItem>
+              <MenuItem value={"green"}>green</MenuItem>
+              <MenuItem value={"multicolored"}>multicolored</MenuItem>
+              <MenuItem value={"orange"}>orange</MenuItem>
+              <MenuItem value={"Pink"}>pink</MenuItem>
+              <MenuItem value={"Purple"}>purple</MenuItem>
+              <MenuItem value={"red"}>red</MenuItem>
+              <MenuItem value={"white"}>white</MenuItem>
+              <MenuItem value={"yellow"}>yellow</MenuItem>
+            </MenuList>
+          </Menu>
         </Box>
         <Box>
-          <Accordion
-            allowMultiple
-            position={"absolute"}
-            bg={"white"}
-            _hover={{ bg: "white" }}
-            box-shadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"
+          <Menu
+            isOpen={isGrowthHeightMenuOpen}
+            onOpen={() => setIsGrowthHeightMenuOpen(true)}
+            onClose={() => setIsGrowthHeightMenuOpen(false)}
           >
-            <AccordionItem>
-              {({ isExpanded }) => (
-                <>
-                  <AccordionButton
-                    _hover={{ bg: "white" }}
-                    w={["120px", "130px", "150px", "200px"]}
+            <MenuButton
+              cursor={"pointer"}
+              as={Box}
+              bg={"white"}
+              _hover={{ bg: "white" }}
+              w={["120px", "130px", "150px", "200px"]}
+            >
+              <Flex
+                h={"35px"}
+                alignItems={"center"}
+                justifyContent={"space-around"}
+              >
+                <Flex alignItems={"center"} justifyContent={"flex-start"}>
+                  <Image
+                    w={"35px"}
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr1Jbsv-Mf5uWHSmkZZ-TQi-xoeF1aEnas1jNCZOp-YPrbe_4xde9LfNau_p7zcpqVDo0&usqp=CAU"
+                  />
+                  <Box
+                    as="span"
+                    flex="1"
+                    textAlign="left"
+                    fontSize={15}
+                    pl={"5px"}
+                    pr={"10px"}
                   >
-                    <Image
-                      w={"35px"}
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr1Jbsv-Mf5uWHSmkZZ-TQi-xoeF1aEnas1jNCZOp-YPrbe_4xde9LfNau_p7zcpqVDo0&usqp=CAU"
-                    />
-                    <Box
-                      as="span"
-                      flex="1"
-                      textAlign="left"
-                      fontSize={15}
-                      pl={"5px"}
-                      pr={"10px"}
-                    >
-                      Growth height
-                    </Box>
-                    {isExpanded ? (
-                      <TbTriangleInvertedFilled
-                        fontSize="11px"
-                        color="#6DB644"
-                      />
-                    ) : (
-                      <TbTriangleFilled fontSize="11px" color="#6DB644" />
-                    )}
-                  </AccordionButton>
-
-                  <AccordionPanel
-                    pb={2}
-                    cursor="pointer"
-                    textAlign={"left"}
-                    fontSize={"14px"}
-                    onClick={() => handleHeight("small")}
-                  >
-                    small
-                  </AccordionPanel>
-                  <AccordionPanel
-                    textAlign={"left"}
-                    pb={2}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleHeight("medium")}
-                  >
-                    medium
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleHeight("large")}
-                  >
-                    large
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-          </Accordion>
+                    Growth height
+                  </Box>
+                </Flex>
+                {isGrowthHeightMenuOpen ? (
+                  <TbTriangleFilled fontSize="11px" color="#6DB644" />
+                ) : (
+                  <TbTriangleInvertedFilled fontSize="11px" color="#6DB644" />
+                )}
+              </Flex>
+            </MenuButton>
+            <MenuList onClick={handleHeight}>
+              <MenuItem value={"small"}>small</MenuItem>
+              <MenuItem value={"medium"}>medium</MenuItem>
+              <MenuItem value={"large"}>large</MenuItem>
+            </MenuList>
+          </Menu>
         </Box>
         <Box>
-          <Accordion
-            allowMultiple
-            position={"absolute"}
-            bg={"white"}
-            _hover={{ bg: "white" }}
-            box-shadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"
+          <Menu
+            isOpen={isLightMenuOpen}
+            onOpen={() => setIsLightMenuOpen(true)}
+            onClose={() => setIsLightMenuOpen(false)}
           >
-            <AccordionItem>
-              {({ isExpanded }) => (
-                <>
-                  <AccordionButton
-                    _hover={{ bg: "white" }}
-                    w={["120px", "130px", "150px", "200px"]}
+            <MenuButton
+              cursor={"pointer"}
+              as={Box}
+              bg={"white"}
+              _hover={{ bg: "white" }}
+              w={["120px", "130px", "150px", "200px"]}
+            >
+              <Flex
+                h={"35px"}
+                alignItems={"center"}
+                justifyContent={"space-around"}
+              >
+                <Flex alignItems={"center"} justifyContent={"flex-start"}>
+                  <Image
+                    w={"35px"}
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE-R4MYwIOReYKc6izTyszKECvB5dTgy4MCA&usqp=CAU"
+                  />
+                  <Box
+                    as="span"
+                    flex="1"
+                    textAlign="left"
+                    fontSize={15}
+                    pl={"5px"}
+                    pr={"10px"}
                   >
-                    <Image
-                      w={"40px"}
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE-R4MYwIOReYKc6izTyszKECvB5dTgy4MCA&usqp=CAU"
-                    />
-                    <Box
-                      as="span"
-                      flex="1"
-                      textAlign="left"
-                      fontSize={15}
-                      pl={"5px"}
-                      pr={"10px"}
-                    >
-                      Light
-                    </Box>
-                    {isExpanded ? (
-                      <TbTriangleInvertedFilled
-                        fontSize="11px"
-                        color="#6DB644"
-                      />
-                    ) : (
-                      <TbTriangleFilled fontSize="11px" color="#6DB644" />
-                    )}
-                  </AccordionButton>
-
-                  <AccordionPanel
-                    pb={2}
-                    cursor="pointer"
-                    textAlign={"left"}
-                    fontSize={"14px"}
-                    onClick={() => handleLight("sunny")}
-                  >
-                    sunny
-                  </AccordionPanel>
-                  <AccordionPanel
-                    textAlign={"left"}
-                    pb={2}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleLight("shade")}
-                  >
-                    shade
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleLight("semi-shade")}
-                  >
-                    semi-shade
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-          </Accordion>
+                    Light
+                  </Box>
+                </Flex>
+                {isLightMenuOpen ? (
+                  <TbTriangleFilled fontSize="11px" color="#6DB644" />
+                ) : (
+                  <TbTriangleInvertedFilled fontSize="11px" color="#6DB644" />
+                )}
+              </Flex>
+            </MenuButton>
+            <MenuList onClick={handleLight}>
+              <MenuItem value={"sunny"}>sunny</MenuItem>
+              <MenuItem value={"shade"}>shade</MenuItem>
+              <MenuItem value={"semi-shade"}>semi-shade</MenuItem>
+            </MenuList>
+          </Menu>
         </Box>
         <Box>
-          <Accordion
-            allowMultiple
-            position={"absolute"}
-            bg={"white"}
-            _hover={{ bg: "white" }}
-            box-shadow="rgba(0, 0, 0, 0.24) 0px 3px 8px"
+          <Menu
+            isOpen={isGardenStyleMenuOpen}
+            onOpen={() => setIsGardenStyleMenuOpen(true)}
+            onClose={() => setIsGardenStyleMenuOpen(false)}
           >
-            <AccordionItem>
-              {({ isExpanded }) => (
-                <>
-                  <AccordionButton
-                    _hover={{ bg: "white" }}
-                    w={["120px", "130px", "150px", "200px"]}
+            <MenuButton
+              cursor={"pointer"}
+              as={Box}
+              bg={"white"}
+              _hover={{ bg: "white" }}
+              w={["120px", "130px", "150px", "200px"]}
+            >
+              <Flex
+                h={"35px"}
+                alignItems={"center"}
+                justifyContent={"space-around"}
+              >
+                <Flex alignItems={"center"} justifyContent={"flex-start"}>
+                  <Image
+                    w={"35px"}
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT76HkxhJJGhRTvTaqW2PhaYxWqYuuOh4VqBw&usqp=CAU"
+                  />
+                  <Box
+                    as="span"
+                    flex="1"
+                    textAlign="left"
+                    fontSize={15}
+                    pl={"5px"}
+                    pr={"10px"}
                   >
-                    <Image
-                      w={"50px"}
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT76HkxhJJGhRTvTaqW2PhaYxWqYuuOh4VqBw&usqp=CAU"
-                    />
-                    <Box
-                      as="span"
-                      flex="1"
-                      textAlign="left"
-                      fontSize={15}
-                      pl={"5px"}
-                      pr={"10px"}
-                    >
-                      Garden Style
-                    </Box>
-                    {isExpanded ? (
-                      <TbTriangleInvertedFilled
-                        fontSize="11px"
-                        color="#6DB644"
-                      />
-                    ) : (
-                      <TbTriangleFilled fontSize="11px" color="#6DB644" />
-                    )}
-                  </AccordionButton>
-
-                  <AccordionPanel
-                    pb={2}
-                    cursor="pointer"
-                    textAlign={"left"}
-                    fontSize={"14px"}
-                    onClick={() => handleGardenStyle("Forest Garden")}
-                  >
-                    Forest garden
-                  </AccordionPanel>
-                  <AccordionPanel
-                    textAlign={"left"}
-                    pb={2}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleGardenStyle("Flower garden")}
-                  >
-                    Flower garden
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleGardenStyle("Water garden")}
-                  >
-                    Water garden
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleGardenStyle("Roof Garden")}
-                  >
-                    Roof garden
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleGardenStyle("Natural garden")}
-                  >
-                    Natural garden
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleGardenStyle("cottage garden")}
-                  >
-                    Cottage garden
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleGardenStyle("Rose Garden")}
-                  >
-                    Rose garden
-                  </AccordionPanel>
-                  <AccordionPanel
-                    pb={2}
-                    textAlign={"left"}
-                    cursor="pointer"
-                    fontSize={"14px"}
-                    onClick={() => handleGardenStyle("Pot garden")}
-                  >
-                    Pot garden
-                  </AccordionPanel>
-                </>
-              )}
-            </AccordionItem>
-          </Accordion>
+                    Garden Style
+                  </Box>
+                </Flex>
+                {isGardenStyleMenuOpen ? (
+                  <TbTriangleFilled fontSize="11px" color="#6DB644" />
+                ) : (
+                  <TbTriangleInvertedFilled fontSize="11px" color="#6DB644" />
+                )}
+              </Flex>
+            </MenuButton>
+            <MenuList onClick={handleGardenStyle}>
+              <MenuItem value={"Forest Garden"}>Forest garden</MenuItem>
+              <MenuItem value={"Flower garden"}>Flower garden</MenuItem>
+              <MenuItem value={"Water garden"}>Water garden</MenuItem>
+              <MenuItem value={"Roof Garden"}>Roof garden</MenuItem>
+              <MenuItem value={"Natural garden"}>Natural garden</MenuItem>
+              <MenuItem value={"cottage garden"}>Cottage garden</MenuItem>
+              <MenuItem value={"Rose Garden"}>Rose garden</MenuItem>
+              <MenuItem value={"Pot garden"}>Pot garden</MenuItem>
+            </MenuList>
+          </Menu>
         </Box>
       </Grid>
     </Box>
